@@ -11,7 +11,7 @@ namespace RSDK
 #define SAMPLE_FORMAT   float
 
 #define AUDIO_FREQUENCY (44100)
-#define AUDIO_CHANNELS  (2)
+#define AUDIO_CHANNELS  (1)
 
 struct SFXInfo {
     RETRO_HASH_MD5(hash);

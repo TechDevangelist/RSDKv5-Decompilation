@@ -4,8 +4,8 @@ PKGCONFIG	=  pkg-config
 STRIP		?= strip
 
 STATIC		?= 1
-DEBUG		?= 1
-VERBOSE		?= 0
+DEBUG		?= 0
+VERBOSE		?= 1
 PROFILE		?= 0
 
 RSDK_ONLY   ?= 0
@@ -21,8 +21,8 @@ endif
 RSDK_SUFFIX  = 
 USERTYPE    ?= Dummy
 
-RSDK_CFLAGS  =
-RSDK_LDFLAGS =
+RSDK_CFLAGS  = -I/usr/include
+RSDK_LDFLAGS = -static-libstdc++ -static-libgcc
 RSDK_LIBS    =
 
 RSDK_PREBUILD =
@@ -36,7 +36,7 @@ GAME_SUFFIX ?= .so
 GAME_ALLC   ?= 1
 
 GAME_CFLAGS  =
-GAME_LDFLAGS = -shared
+GAME_LDFLAGS = -shared -static-libstdc++ -static-libgcc
 GAME_LIBS    =
 
 GAME_PREBUILD =

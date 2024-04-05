@@ -26,7 +26,7 @@ bool RenderDevice::Init()
 
     uint8 flags = 0;
 
-#if RETRO_PLATFORM == RETRO_ANDROID
+//#if RETRO_PLATFORM == RETRO_ANDROID
     videoSettings.windowed = false;
     SDL_DisplayMode dm;
     SDL_GetDesktopDisplayMode(0, &dm);
@@ -38,12 +38,10 @@ bool RenderDevice::Init()
 
     videoSettings.windowWidth = ((float)SCREEN_YSIZE * h / w);
 
-#elif RETRO_PLATFORM == RETRO_SWITCH
     videoSettings.windowed     = false;
-    videoSettings.windowWidth  = 1920;
-    videoSettings.windowHeight = 1080;
-    flags |= SDL_WINDOW_FULLSCREEN;
-#endif
+    videoSettings.windowWidth  = 640;
+    videoSettings.windowHeight = 480;
+    flags |= SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS;
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     SDL_SetHint(SDL_HINT_RENDER_VSYNC, videoSettings.vsync ? "1" : "0");
@@ -111,90 +109,6 @@ void RenderDevice::FlipScreen()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
     SDL_RenderClear(renderer);
 
-#if (SDL_COMPILEDVERSION >= SDL_VERSIONNUM(2, 0, 18))
-    int32 startVert = 0;
-    switch (videoSettings.screenCount) {
-        default:
-        case 0:
-#if RETRO_REV02
-            startVert = 54;
-#else
-            startVert = 18;
-#endif
-            SDL_RenderGeometryRaw(renderer, imageTexture, &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-            break;
-
-        case 1:
-            startVert = 0;
-            SDL_RenderGeometryRaw(renderer, screenTexture[0], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-            break;
-
-        case 2:
-#if RETRO_REV02
-            startVert = startVertex_2P[0];
-#else
-            startVert = 6;
-#endif
-            SDL_RenderGeometryRaw(renderer, screenTexture[0], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-
-#if RETRO_REV02
-            startVert = startVertex_2P[1];
-#else
-            startVert = 12;
-#endif
-            SDL_RenderGeometryRaw(renderer, screenTexture[1], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-            break;
-
-#if RETRO_REV02
-        case 3:
-            startVert = startVertex_3P[0];
-            SDL_RenderGeometryRaw(renderer, screenTexture[0], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-
-            startVert = startVertex_3P[1];
-            SDL_RenderGeometryRaw(renderer, screenTexture[1], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-
-            startVert = startVertex_3P[2];
-            SDL_RenderGeometryRaw(renderer, screenTexture[2], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-            break;
-
-        case 4:
-            startVert = 30;
-            SDL_RenderGeometryRaw(renderer, screenTexture[0], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-
-            startVert = 36;
-            SDL_RenderGeometryRaw(renderer, screenTexture[1], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-
-            startVert = 42;
-            SDL_RenderGeometryRaw(renderer, screenTexture[2], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-
-            startVert = 48;
-            SDL_RenderGeometryRaw(renderer, screenTexture[3], &vertexBuffer[startVert].pos.x, sizeof(RenderVertex),
-                                  (SDL_Color *)&vertexBuffer[startVert].color, sizeof(RenderVertex), &vertexBuffer[startVert].tex.x,
-                                  sizeof(RenderVertex), 6, NULL, 0, 0);
-            break;
-#endif
-    }
-#else
     int32 startVert = 0;
     SDL_Rect src, dst;
 
@@ -218,8 +132,8 @@ void RenderDevice::FlipScreen()
             startVert = 18;
 #endif
             _SET_RECTS;
-            src.w = vertexBuffer[startVert + 2].tex.x * 1024 - src.x;
-            src.h = vertexBuffer[startVert + 2].tex.y * 512 - src.y;
+            src.w = vertexBuffer[startVert + 2].tex.x * 640 - src.x;
+            src.h = vertexBuffer[startVert + 2].tex.y * 480 - src.y;
             SDL_RenderCopy(renderer, imageTexture, &src, &dst);
             break;
 
@@ -293,7 +207,6 @@ void RenderDevice::FlipScreen()
             break;
 #endif
     }
-#endif
     if (dimAmount < 1.0f) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF - (dimAmount * 0xFF));
         SDL_RenderFillRect(renderer, NULL);
@@ -521,8 +434,8 @@ bool RenderDevice::InitGraphicsAPI()
         textureSize.y = 256.0;
     }
     else {
-        textureSize.x = 1024.0;
-        textureSize.y = 512.0;
+        textureSize.x = 512.0;
+        textureSize.y = 256.0;
     }
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     for (int32 s = 0; s < SCREEN_COUNT; ++s) {
