@@ -5,7 +5,7 @@ STRIP		?= strip
 
 STATIC		?= 1
 DEBUG		?= 0
-VERBOSE		?= 1
+VERBOSE		?= 0
 PROFILE		?= 0
 
 RSDK_ONLY   ?= 0
@@ -43,7 +43,7 @@ GAME_PREBUILD =
 GAME_PRELINK  =
 endif
 
-DEFINES      ?=
+DEFINES      ?= -DRETRO_INCLUDE_EDITOR=0
 
 ifneq ($(AUTOBUILD),)
 	DEFINES += -DRSDK_AUTOBUILD
@@ -96,8 +96,8 @@ ifeq ($(DEBUG),1)
 	CFLAGS += -g
 	STRIP = :
 else
-	CXXFLAGS += -O3
-	CFLAGS += -O3
+	CXXFLAGS += -0fast
+	CFLAGS += -Ofast
 endif
 
 ifeq ($(STATIC),1)

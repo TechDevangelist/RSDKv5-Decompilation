@@ -244,10 +244,10 @@ enum GameRegions {
 #endif
 
 // Defines the version of the mod loader, this should be changed ONLY if the ModFunctionTable is updated in any way
-//#ifndef RETRO_MOD_LOADER_VER
-//#define RETRO_MOD_LOADER_VER (2)
-#define RETRO_USE_MOD_LOADER (0)
-//#endif
+#ifndef RETRO_MOD_LOADER_VER
+#define RETRO_MOD_LOADER_VER (2)
+//#define RETRO_USE_MOD_LOADER (0)
+#endif
 
 // ============================
 // PLATFORM INIT
