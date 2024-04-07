@@ -184,3 +184,5 @@ if(WITH_RSDK)
         GAME_VERSION=${GAME_VERSION}
     )
 endif()
+
+target_link_libraries(RetroEngine stdc++fs)
