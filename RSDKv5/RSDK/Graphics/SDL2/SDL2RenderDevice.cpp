@@ -517,12 +517,12 @@ bool RenderDevice::InitGraphicsAPI()
 #else
     if (maxPixHeight <= 256) {
 #endif
-        textureSize.x = 512.0;
-        textureSize.y = 256.0;
+        textureSize.x = 320.0;
+        textureSize.y = 240.0;
     }
     else {
-        textureSize.x = 1024.0;
-        textureSize.y = 512.0;
+        textureSize.x = 320.0;
+        textureSize.y = 240.0;
     }
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     for (int32 s = 0; s < SCREEN_COUNT; ++s) {
@@ -816,6 +816,8 @@ void RenderDevice::ProcessEvent(SDL_Event event)
             ++RSDK::SKU::buttonDownCount;
 #endif
             switch (event.key.keysym.scancode) {
+                case SDL_SCANCODE_HOME: isRunning = false; break;
+
                 case SDL_SCANCODE_RETURN:
                     if (event.key.keysym.mod & KMOD_LALT) {
                         videoSettings.windowed ^= 1;
@@ -965,7 +967,7 @@ void RenderDevice::ProcessEvent(SDL_Event event)
                         engine.showPaletteOverlay ^= 1;
                     break;
 #endif
-                case SDL_SCANCODE_BACKSPACE:
+                case SDL_SCANCODE_PAGEUP:
                     if (engine.devMenu)
                         engine.gameSpeed = engine.fastForwardSpeed;
                     break;

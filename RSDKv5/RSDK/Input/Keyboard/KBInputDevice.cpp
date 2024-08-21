@@ -239,6 +239,7 @@ int32 winAPIToSDLMappings(int32 mapping)
         case VK_NONAME: return SDL_SCANCODE_UNKNOWN;
         case VK_PA1: return SDL_SCANCODE_UNKNOWN;
         case VK_OEM_CLEAR: return SDL_SCANCODE_UNKNOWN;
+	//case VK_BACKSPACE: return SDL_SCANCODE_BACKSPACE;
     }
 }
 
@@ -335,6 +336,7 @@ int32 SDLToWinAPIMappings(int32 mapping)
         case SDL_SCANCODE_RCTRL: return VK_RCONTROL;
         case SDL_SCANCODE_LALT: return VK_LMENU;
         case SDL_SCANCODE_RALT: return VK_RMENU;
+	//case SDL_SCANCODE_BACKSPACE: return VK_BACKSPACE;
     }
 }
 #elif RETRO_INPUTDEVICE_GLFW

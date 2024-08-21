@@ -1,4 +1,5 @@
 #include "RSDK/Core/RetroEngine.hpp"
+#include <algorithm>
 
 using namespace RSDK;
 
@@ -176,7 +177,7 @@ void RSDK::SetIdentityMatrix(Matrix *matrix)
 void RSDK::MatrixMultiply(Matrix *dest, Matrix *matrixA, Matrix *matrixB)
 {
     int32 result[4][4];
-    memset(result, 0, 4 * 4 * sizeof(int32));
+    //memset(result, 0, 4 * 4 * sizeof(int32));
 
     for (int32 i = 0; i < 0x10; ++i) {
         uint32 rowA        = i / 4;
@@ -878,6 +879,11 @@ void RSDK::Draw3DScene(uint16 sceneID)
         // https://web.archive.org/web/20110108233032/http://rosettacode.org/wiki/Sorting_algorithms/Insertion_sort#C
 
         Scene3DFace *a = scn->faceBuffer;
+
+        // Use the faster std::sort instead
+        std::sort(a, a + scn->faceCount, [](const Scene3DFace &a, const Scene3DFace &b) {
+            return a.depth > b.depth;
+        });
 
         int i, j;
         Scene3DFace temp;

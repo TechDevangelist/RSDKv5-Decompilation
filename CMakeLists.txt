@@ -5,7 +5,7 @@ project(RetroEngine)
 set(DECOMP_VERSION 1.1.0-a)
 
 set(RETRO_REVISION 3 CACHE STRING "What revision to compile for. Defaults to v5U = 3")
-option(RETRO_DISABLE_PLUS "Disable plus. Should be set on for any public releases." OFF)
+option(RETRO_DISABLE_PLUS "Disable plus. Should be set on for any public releases." ON)
 
 option(RETRO_MOD_LOADER "Enables or disables the mod loader." ON)
 set(RETRO_MOD_LOADER_VER 2 CACHE STRING "Sets the mod loader version. Defaults to latest")
@@ -184,3 +184,5 @@ if(WITH_RSDK)
         GAME_VERSION=${GAME_VERSION}
     )
 endif()
+
+target_link_libraries(RetroEngine stdc++fs)

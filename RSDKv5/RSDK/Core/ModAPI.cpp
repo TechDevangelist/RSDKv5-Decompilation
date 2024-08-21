@@ -8,12 +8,12 @@ using namespace RSDK;
 #include "Legacy/ModAPILegacy.cpp"
 #endif
 
-#include <filesystem>
+#include <experimental/filesystem>
 #include <stdexcept>
 #include <functional>
 
 #if RETRO_PLATFORM != RETRO_ANDROID
-namespace fs = std::filesystem;
+namespace fs = std::experimental::filesystem;
 #else
 bool fs::exists(fs::path path)
 {
@@ -393,7 +393,7 @@ bool32 RSDK::ScanModFolder(ModInfo *info, const char *targetFile, bool32 fromLoa
 
             for (auto dirFile : dirIterator) {
 #if RETRO_PLATFORM != RETRO_ANDROID
-                if (!dirFile.is_directory()) {
+                 //if (!dirFile.is_directory()) {
 #endif
                     files.push_back(dirFile);
 
@@ -405,7 +405,7 @@ bool32 RSDK::ScanModFolder(ModInfo *info, const char *targetFile, bool32 fromLoa
                         renders++;
                     }
 #if RETRO_PLATFORM != RETRO_ANDROID
-                }
+               //}
 #endif
             }
 
@@ -554,7 +554,7 @@ void RSDK::LoadMods(bool newOnly, bool32 getVersion)
         try {
             auto rdi = fs::directory_iterator(modPath);
             for (auto de : rdi) {
-                if (de.is_directory()) {
+                //if (de.is_directory()) {
                     fs::path modDirPath = de.path();
                     ModInfo info        = {};
                     std::string folder  = modDirPath.filename().string();
@@ -570,7 +570,7 @@ void RSDK::LoadMods(bool newOnly, bool32 getVersion)
                             modList.push_back(info);
                         }
                     }
-                }
+                //}
             }
         } catch (fs::filesystem_error &fe) {
             PrintLog(PRINT_ERROR, "Mods folder scanning error: %s", fe.what());

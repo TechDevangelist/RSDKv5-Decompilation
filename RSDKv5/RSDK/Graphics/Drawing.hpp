@@ -15,7 +15,7 @@ namespace RSDK
 #endif
 #define CAMERA_COUNT (4)
 
-#define DEFAULT_PIXWIDTH (424)
+#define DEFAULT_PIXWIDTH (320)
 
 #define LAYER_COUNT     (8)
 #define DRAWGROUP_COUNT (16)
@@ -23,8 +23,8 @@ namespace RSDK
 #define SHADER_COUNT (0x20)
 
 // Also for "Images" but it's a cleaner name as is
-#define RETRO_VIDEO_TEXTURE_W (1024)
-#define RETRO_VIDEO_TEXTURE_H (512)
+#define RETRO_VIDEO_TEXTURE_W (640)
+#define RETRO_VIDEO_TEXTURE_H (480)
 
 enum InkEffects {
     INK_NONE,

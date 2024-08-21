@@ -4,7 +4,7 @@ PKGCONFIG	=  pkg-config
 STRIP		?= strip
 
 STATIC		?= 1
-DEBUG		?= 1
+DEBUG		?= 0
 VERBOSE		?= 0
 PROFILE		?= 0
 
@@ -21,8 +21,8 @@ endif
 RSDK_SUFFIX  = 
 USERTYPE    ?= Dummy
 
-RSDK_CFLAGS  =
-RSDK_LDFLAGS =
+RSDK_CFLAGS  = -I/mount/arm-buildroot-linux-gnueabihf_sdk-buildroot/arm-buildroot-linux-gnueabihf/sysroot/usr/include
+RSDK_LDFLAGS = -static-libstdc++ -static-libgcc
 RSDK_LIBS    =
 
 RSDK_PREBUILD =
@@ -36,7 +36,7 @@ GAME_SUFFIX ?= .so
 GAME_ALLC   ?= 1
 
 GAME_CFLAGS  =
-GAME_LDFLAGS = -shared
+GAME_LDFLAGS = -shared -static-libstdc++ -static-libgcc
 GAME_LIBS    =
 
 GAME_PREBUILD =
@@ -96,8 +96,8 @@ ifeq ($(DEBUG),1)
 	CFLAGS += -g
 	STRIP = :
 else
-	CXXFLAGS += -O3
-	CFLAGS += -O3
+	CXXFLAGS += -Ofast
+	CFLAGS += -Ofast
 endif
 
 ifeq ($(STATIC),1)

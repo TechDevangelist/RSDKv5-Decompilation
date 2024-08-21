@@ -3,8 +3,8 @@
 #include "v3/DrawingLegacyv3.cpp"
 #include "v4/DrawingLegacyv4.cpp"
 
-int32 RSDK::Legacy::SCREEN_XSIZE   = 424;
-int32 RSDK::Legacy::SCREEN_CENTERX = 424 / 2;
+int32 RSDK::Legacy::SCREEN_XSIZE   = 480;
+int32 RSDK::Legacy::SCREEN_CENTERX = 480 / 2;
 
 RSDK::Legacy::DrawListEntry RSDK::Legacy::drawListEntries[LEGACY_DRAWLAYER_COUNT];
 
