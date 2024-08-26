@@ -45,6 +45,4 @@ jobs:
       with:
         name: a30-linux
         path: bin/Linux
-       
-          name: v5-linux
-          path: bin/Linux
+
