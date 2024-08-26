@@ -13,7 +13,7 @@ on: workflow_dispatch
 jobs:
   build-a30:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout 
@@ -22,7 +22,7 @@ jobs:
         submodules: recursive
     - name: setup-toolchain
       run: |
-        sudo apt-get install build-essential make cmake wget autogen autoconf automake build-essential libogg-dev libsdl2-dev libtheora-dev libglew-dev libglfw3-dev -y
+        sudo apt-get install build-essential make cmake wget autogen autoconf automake build-essential libogg-dev libc6 libc6-dev libsdl2-dev libtheora-dev libglew-dev libglfw3-dev -y
         wget -q https://github.com/steward-fu/website/releases/download/miyoo-a30/a30_toolchain.tar.gz
         tar xzf a30_toolchain.gz -C /opt/ 
         chmod +x /opt/a30/bin/*
@@ -34,9 +34,9 @@ jobs:
         export PKG_CONFIG_PATH=/opt/a30/lib/pkgconfig/:/usr/local/lib/pkgconfig/
         export CC="arm-a30-linux-gnueabihf-gcc"
         export CXX="arm-a30-linux-gnueabihf-g++"
-        make -j8 RSDK_ONLY=1 SUBSYSTEM=SDL2 AUTOBUILD=1
-        make -j8 clean-rsdk
-        make -j8 RSDK_ONLY=1 SUBSYSTEM=SDL2 RSDK_REVISION=3 AUTOBUILD=1
+        make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 AUTOBUILD=1
+        make -j4 clean-rsdk
+        make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 RSDK_REVISION=3 AUTOBUILD=1
     - name: output
       run: |
         cat config.log
