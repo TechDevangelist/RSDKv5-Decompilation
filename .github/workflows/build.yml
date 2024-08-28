@@ -23,7 +23,7 @@ jobs:
     - name: setup-toolchain
       run: |
         sudo apt update
-        sudo apt-get install build-essential make cmake wget autogen autoconf automake build-essential libogg-dev libogg libc6 libc6-dev libsdl2-dev libtheora-dev libglew-dev libglfw3-dev libjack-dev -y
+        sudo apt-get install build-essential make cmake wget autogen autoconf automake build-essential libogg-dev libc6 libc6-dev libsdl2-dev libtheora-dev libglew-dev libglfw3-dev libjack-dev -y
         wget -q https://github.com/steward-fu/website/releases/download/miyoo-a30/a30_toolchain-v1.0.tar.gz
         tar xzf a30_toolchain-v1.0.tar.gz -C /opt/
         chmod +x /opt/a30/bin/*
