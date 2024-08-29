@@ -34,7 +34,7 @@ jobs:
         export PATH=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/bin/:$PATH
         export CROSS_COMPILE=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/bin/arm-a30-linux-gnueabihf-
         export PREFIX=/usr
-        export PKG_CONFIG_PATH=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/lib/pkgconfig/:/opt/arm-a30-linux-gnueabihf_sdk-buildroot/arm-a30-linux-gnueabihf/sysroot/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig/
+        export PKG_CONFIG_PATH=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/lib/pkgconfig/:/opt/arm-a30-linux-gnueabihf_sdk-buildroot/arm-a30-linux-gnueabihf/sysroot/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig/:/usr/lib/x86_64-linux-gnu/pkgconfig/
         export CC="arm-a30-linux-gnueabihf-gcc"
         export CXX="arm-a30-linux-gnueabihf-g++"
         make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 AUTOBUILD=1
