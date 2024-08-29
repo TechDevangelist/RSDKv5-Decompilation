@@ -24,15 +24,17 @@ jobs:
       run: |
         sudo apt update
         sudo apt-get install build-essential make cmake wget autogen autoconf automake build-essential libogg-dev libc6 libc6-dev libsdl2-dev libtheora-dev libglew-dev libglfw3-dev libjack-dev libsndfile-dev libportaudio2 -y
-        wget -q https://github.com/steward-fu/website/releases/download/miyoo-a30/a30_toolchain-v1.0.tar.gz
-        tar xzf a30_toolchain-v1.0.tar.gz -C /opt/
-        chmod +x /opt/a30/bin/*
+        #wget -q https://github.com/steward-fu/website/releases/download/miyoo-a30/a30_toolchain-v1.0.tar.gz
+        #tar xzf a30_toolchain-v1.0.tar.gz -C /opt/
+        #chmod +x /opt/a30/bin/*
+        wget -q https://github.com/TechDevangelist/buildroot-actions/releases/download/a30/arm-a30-linux-gnueabihf_sdk-buildroot.tar.gz
+        tar xzf arm-a30-linux-gnueabihf_sdk-buildroot.tar.gz -C /opt/
     - name: make
       run: |
-        export PATH=/opt/a30/bin/:$PATH
-        export CROSS_COMPILE=/opt/a30/bin/arm-a30-linux-gnueabihf-
+        export PATH=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/bin/:$PATH
+        export CROSS_COMPILE=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/bin/arm-a30-linux-gnueabihf-
         export PREFIX=/usr
-        export PKG_CONFIG_PATH=/opt/a30/lib/pkgconfig/:/usr/local/lib/pkgconfig/
+        export PKG_CONFIG_PATH=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/lib/pkgconfig/:/usr/local/lib/pkgconfig/
         export CC="arm-a30-linux-gnueabihf-gcc"
         export CXX="arm-a30-linux-gnueabihf-g++"
         make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 AUTOBUILD=1
