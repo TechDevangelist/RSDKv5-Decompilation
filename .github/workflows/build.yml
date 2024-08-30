@@ -1,4 +1,4 @@
-ename: Build RSDKv5
+name: Build RSDKv5
 
 on: workflow_dispatch
 
