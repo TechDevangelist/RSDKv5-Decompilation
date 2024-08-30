@@ -28,13 +28,13 @@ jobs:
         #tar xzf a30_toolchain-v1.0.tar.gz -C /opt/
         #chmod +x /opt/a30/bin/*
         wget -q https://github.com/TechDevangelist/buildroot-actions/releases/download/a30/arm-a30-linux-gnueabihf_sdk-buildroot.tar.gz
-        tar xzf arm-a30-linux-gnueabihf_sdk-buildroot.tar.gz -C /opt/
+        tar xzf arm-a30-linux-gnueabihf_sdk-buildroot.tar.gz -C /mount/
     - name: make
       run: |
-        export PATH=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/bin/:$PATH
-        export CROSS_COMPILE=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/bin/arm-a30-linux-gnueabihf-
+        export PATH=/mount/arm-a30-linux-gnueabihf_sdk-buildroot/bin/:$PATH
+        export CROSS_COMPILE=/mount/arm-a30-linux-gnueabihf_sdk-buildroot/bin/arm-a30-linux-gnueabihf-
         export PREFIX=/usr
-        export PKG_CONFIG_PATH=/opt/arm-a30-linux-gnueabihf_sdk-buildroot/lib/pkgconfig/:/opt/arm-a30-linux-gnueabihf_sdk-buildroot/arm-a30-linux-gnueabihf/sysroot/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig/:/usr/lib/x86_64-linux-gnu/pkgconfig/
+        export PKG_CONFIG_PATH=/mount/arm-a30-linux-gnueabihf_sdk-buildroot/lib/pkgconfig/:/opt/arm-a30-linux-gnueabihf_sdk-buildroot/arm-a30-linux-gnueabihf/sysroot/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig/:/usr/lib/x86_64-linux-gnu/pkgconfig/
         export CC="arm-a30-linux-gnueabihf-gcc"
         export CXX="arm-a30-linux-gnueabihf-g++"
         make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 AUTOBUILD=1
