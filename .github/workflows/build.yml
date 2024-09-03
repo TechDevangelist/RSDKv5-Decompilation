@@ -30,6 +30,7 @@ jobs:
         sudo mkdir /mount -p
         wget -q https://github.com/TechDevangelist/buildroot-actions/releases/download/a30/arm-a30-linux-gnueabihf_sdk-buildroot.tar.gz
         sudo tar xzf arm-a30-linux-gnueabihf_sdk-buildroot.tar.gz -C /mount/
+        sudo bash /mount/arm-a30-linux-gnueabihf_sdk-buildroot/relocate-sdk.sh
     - name: make
       run: |
         export PATH=/mount/arm-a30-linux-gnueabihf_sdk-buildroot/bin/:$PATH
