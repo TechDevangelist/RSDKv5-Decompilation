@@ -7,7 +7,10 @@ on:
         description: 'disable plus content'
         required: false
         default: 'ON'
-        type: string
+        type: choice
+        options:
+          - ON
+          - OFF
 
 
 env:
