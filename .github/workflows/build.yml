@@ -2,6 +2,16 @@ name: Build RSDKv5
 
 on: workflow_dispatch
 
+env:
+  GENERAL_FLAGS: "-DRETRO_DISABLE_PLUS=ON -DCMAKE_BUILD_TYPE=Release"
+  V5_FLAGS: "-DRETRO_REVISION=2"
+  V5U_FLAGS: "-DRETRO_REVISION=3"
+  # Normally you would use $VCPKG_INSTALLATION_PATH, but it's broken...so hardcode C:/vcpkg
+  GENERAL_WIN_FLAGS: "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  WIN32_FLAGS: "-DVCPKG_TARGET_TRIPLET=x86-windows-static -A Win32"
+  WIN64_FLAGS: "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
+  # FIXME: For some reason ubuntu enables _FORTIFY_SOURCE by default, so let's override it to prevent IO bugs
+  GENERAL_LINUX_FLAGS: "-DCMAKE_CXX_FLAGS='-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0'"
 # each artifact is like 15MB so we'll start by only doing it manually
 # on:
 #   push:
@@ -39,18 +49,18 @@ jobs:
         export PKG_CONFIG_PATH=/mount/arm-a30-linux-gnueabihf_sdk-buildroot/lib/pkgconfig/:/mount/arm-a30-linux-gnueabihf_sdk-buildroot/arm-a30-linux-gnueabihf/sysroot/usr/lib/pkgconfig/:/usr/local/lib/pkgconfig/:/usr/lib/x86_64-linux-gnu/pkgconfig/:$PKG_CONFIG_PATH
         export CC="arm-a30-linux-gnueabihf-gcc"
         export CXX="arm-a30-linux-gnueabihf-g++"
-        cmake -B build -DRETRO_REVISION=3 -DRETRO_DISABLE_PLUS=OFF -DCMAKE_CXX_FLAGS='-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0'
-        cmake --build build --config release
-        cmake -B build -DRETRO_REVISION=2 -DRETRO_DISABLE_PLUS=OFF -DCMAKE_CXX_FLAGS='-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0'
-        cmake --build build --config release --clean-first
-        ls -lahR /home/runner/work/RSDKv5-Decompilation/RSDKv5-Decompilation/build
+        cmake -B build_v5 ${{env.GENERAL_FLAGS}} ${{env.GENERAL_LINUX_FLAGS}} ${{env.V5_FLAGS}}
+        cmake --build build_v5 --parallel
+        cmake -B build_v5U ${{env.GENERAL_FLAGS}} ${{env.GENERAL_LINUX_FLAGS}} ${{env.V5U_FLAGS}}
+        cmake --build build_v5U --parallel
+        ls -lahR /home/runner/work/RSDKv5-Decompilation/RSDKv5-Decompilation/build_*
         #make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 AUTOBUILD=1
         #make -j4 clean-rsdk
         #make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 RSDK_REVISION=3 AUTOBUILD=1
     - name: Move artifacts
       run: |
           mkdir artifacts
-          mv ./build/RSDKv5* ./artifacts
+          mv ./build_*/RSDKv5* ./artifacts
           tar -czvf linux.tar.gz -C ./artifacts .
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
