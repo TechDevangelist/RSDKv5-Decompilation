@@ -8,12 +8,12 @@ using namespace RSDK;
 #include "Legacy/ModAPILegacy.cpp"
 #endif
 
-#include <experimental/filesystem>
+#include <filesystem>
 #include <stdexcept>
 #include <functional>
 
 #if RETRO_PLATFORM != RETRO_ANDROID
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 #else
 bool fs::exists(fs::path path)
 {
