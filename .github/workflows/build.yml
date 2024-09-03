@@ -41,6 +41,7 @@ jobs:
         export CXX="arm-a30-linux-gnueabihf-g++"
         cmake -B build -DRETRO_REVISION=3 -DRETRO_DISABLE_PLUS=OFF -DCMAKE_CXX_FLAGS='-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0'
         cmake --build build --config release
+        ls -lahR /home/runner/work/RSDKv5-Decompilation/RSDKv5-Decompilation/build
         #make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 AUTOBUILD=1
         #make -j4 clean-rsdk
         #make -j4 RSDK_ONLY=1 SUBSYSTEM=SDL2 RSDK_REVISION=3 AUTOBUILD=1
